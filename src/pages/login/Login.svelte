@@ -1,43 +1,44 @@
 <script>
-  import umatterLogo from '@assets/umatter.svg';
-  import kakaoButton from '@assets/kakao_login_large_narrow.png';
+  import umatterLogo from "@assets/umatter.svg";
+  import kakaoButton from "@assets/kakao_login_medium_wide.png";
 </script>
 
-<div>
-  <h1>UMatter</h1>
-  <img class="logo" src={umatterLogo} alt="">
-  <button>
-    <img src={kakaoButton} alt="">
+<div class="container">
+  <h1 class="item">UMatter</h1>
+  <img class="item2 logo" src={umatterLogo} alt="" />
+  <button class="item3">
+    <img src={kakaoButton} alt="" />
   </button>
 </div>
 
 <style>
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     height: 100vh;
+    width: 100vw;
   }
 
-  h1 {
+  .item {
+    grid-row: 1 / 2;
+    justify-self: center;
+    align-self: center;
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
   }
 
-  .logo {
-    width: 20rem;
-    margin-bottom: 1rem;
+  .item2 {
+    grid-row: 2 / 3;
+    justify-self: center;
+    align-self: center;
   }
 
-  button {
+  .item3 {
+    grid-row: 3 / 4;
+    justify-self: center;
+    align-self: center;
     border: none;
-    background: none;
-    cursor: pointer;
-  }
-
-  button img {
-    width: 15rem;
+    background-color: transparent;
   }
 </style>
