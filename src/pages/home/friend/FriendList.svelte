@@ -3,8 +3,18 @@
   import { currentPage } from "@stores/page.js";
 
   onMount(() => {
-    currentPage.set("친구 목록");
+    currentPage.set("친구");
   });
 </script>
 
-<h1>FriendList</h1>
+<div class="container">
+  <h1>FriendList</h1>
+</div>
+
+<style>
+  .container {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+  }
+</style>
