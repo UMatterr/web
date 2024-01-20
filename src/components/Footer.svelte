@@ -1,11 +1,23 @@
 <script>
+  export let page;
+
   import homeSvg from "@assets/home.svg";
   import personSvg from "@assets/person.svg";
+
+  function homeClick() {
+    page = "event";
+    console.log("homeClick");
+  }
+
+  function personClick() {
+    page = "friend";
+    console.log("personClick");
+  }
 </script>
 
 <div>
-  <img class="item" src={homeSvg} alt="" />
-  <img class="item" src={personSvg} alt="" />
+  <img on:click={homeClick} class="item" src={homeSvg} alt="" />
+  <img on:click={personClick} class="item" src={personSvg} alt="" />
 </div>
 
 <style>

@@ -1,11 +1,21 @@
 <script>
-  import Footer from "./Footer.svelte";
+  import Footer from "@components/Footer.svelte";
+  import EventList from "./event/EventList.svelte";
+  import FriendList from "./friend/FriendList.svelte";
+
+  let page = "event";
 </script>
 
 <div class="container">
-  <h1>Home</h1>
+  <div class="main">
+    {#if page === "event"}
+      <EventList />
+    {:else if page === "friend"}
+      <FriendList />
+    {/if}
+  </div>
   <div class="footer">
-    <Footer></Footer>
+    <Footer bind:page></Footer>
   </div>
 </div>
 
@@ -19,6 +29,14 @@
     height: 100%;
     width: 100%;
     padding: 0;
+  }
+
+  .main {
+    grid-row: 1 / 15;
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    height: 100%;
   }
 
   .footer {
