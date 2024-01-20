@@ -1,11 +1,13 @@
 <script>
   import Login from "@pages/login/Login.svelte";
-  import Home from "@pages/home/Home.svelte";
   import { isLoggedIn } from "@stores/user.js";
+
+  import Router from "svelte-spa-router";
+  import { rootRouter } from "./routes/rootRouter.js";
 </script>
 
 {#if $isLoggedIn}
-  <Home />
+  <Router routes={rootRouter} />
 {:else}
   <Login />
 {/if}
