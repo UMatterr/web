@@ -16,18 +16,33 @@
 </script>
 
 <div class="grid">
-  <input
-    class="form-control"
-    placeholder="이름"
-    type="text"
-    id="name"
-    name="name"
-    autocomplete="off"
-  />
+  <div class="item-name">
+    <label for="name">이름</label>
+    <input
+      class="form-control"
+      placeholder="이름"
+      type="text"
+      id="name"
+      name="name"
+      autocomplete="off"
+    />
+  </div>
 
-  <div class="eventList">ddd</div>
+  <div class="item-birthDay">
+    <label for="birthDay">생일</label>
+    <input class="form-control" type="date" id="birthDay" name="birthDay" />
+  </div>
 
-  <div class="buttonDiv">ddd</div>
+  <div class="eventList">eventList</div>
+
+  <div class="item-addEvent">
+    <button>이벤트 추가</button>
+  </div>
+
+  <div class="buttonDiv">
+    <button>저장</button>
+    <button>취소</button>
+  </div>
 </div>
 
 <style>
@@ -40,16 +55,54 @@
     height: 100%;
   }
 
-  #name {
+  .item-name {
     grid-row: 1 / 2;
+    align-self: center;
+    color: #333;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr;
+  }
+
+  div label {
+    grid-column: 1 / 2;
     align-self: center;
     color: #333;
   }
 
+  div input {
+    grid-column: 2 / 11;
+    align-self: center;
+    color: #333;
+  }
+
+  .item-birthDay {
+    grid-row: 2 / 3;
+    align-self: center;
+    color: #333;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr;
+  }
+
   .eventList {
-    grid-row: 2 / 14;
+    grid-row: 3 / 13;
     overflow-y: scroll;
     border: 1px solid #eaeaea;
+  }
+
+  .item-addEvent {
+    grid-row: 13 / 14;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item-addEvent button {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0.5rem;
   }
 
   .buttonDiv {
@@ -57,6 +110,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .buttonDiv button {
     border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0.5rem;
   }
 </style>
