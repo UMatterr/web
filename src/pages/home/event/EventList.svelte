@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
+  import { push } from "svelte-spa-router";
   import Select from "svelte-select";
   import Event from "./Event.svelte";
 
@@ -52,7 +53,7 @@
 
   <div class="buttonDiv">
     <button>간편 메시지 생성</button>
-    <button>간편 이벤트 등록</button>
+    <button on:click={() => push("/simple_event")}>간편 이벤트 등록</button>
   </div>
 </div>
 
