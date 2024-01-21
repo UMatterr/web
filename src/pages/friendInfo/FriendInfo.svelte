@@ -33,7 +33,10 @@
     <input class="form-control" type="date" id="birthDay" name="birthDay" />
   </div>
 
-  <div class="eventList">eventList</div>
+  <div class="eventList">
+    <h2>등록된 이벤트</h2>
+    ddd
+  </div>
 
   <div class="item-addEvent">
     <button>이벤트 추가</button>
