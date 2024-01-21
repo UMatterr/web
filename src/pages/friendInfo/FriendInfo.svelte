@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { querystring } from "svelte-spa-router";
+  import { querystring, pop } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
 
   onMount(() => {
@@ -44,7 +44,7 @@
 
   <div class="buttonDiv">
     <button>저장</button>
-    <button>취소</button>
+    <button on:click={() => pop()}>취소</button>
   </div>
 </div>
 

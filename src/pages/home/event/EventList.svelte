@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
   import Select from "svelte-select";
+  import Event from "./Event.svelte";
 
   let items = ["시간순", "이름검색", "카테고리"];
 
@@ -32,7 +33,21 @@
     </div>
   </div>
   <div class="mainDiv">
-    <h2>이벤트 목록</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">카테</th>
+          <th scope="col">이름</th>
+          <th scope="col">날짜</th>
+          <th scope="col">주기</th>
+        </tr>
+      </thead>
+      <tbody>
+        <Event />
+        <Event />
+        <Event />
+      </tbody>
+    </table>
   </div>
 
   <div class="buttonDiv">
@@ -83,5 +98,9 @@
     border-radius: 5px;
     padding: 0.5rem;
     margin: 0.5rem;
+  }
+
+  table {
+    text-align: center;
   }
 </style>
