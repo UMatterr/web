@@ -2,6 +2,10 @@
   import { onMount } from "svelte";
   import { querystring, pop } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
+  import EventList from "./EventList.svelte";
+  import AddEvent from "./AddEvent.svelte";
+
+  let addMode = false;
 
   onMount(() => {
     let friendId = null;
@@ -28,18 +32,26 @@
     />
   </div>
 
-  <div class="item-birthDay">
-    <label for="birthDay">생일</label>
-    <input class="form-control" type="date" id="birthDay" name="birthDay" />
-  </div>
-
-  <div class="eventList">
-    <h2>등록된 이벤트</h2>
-    ddd
+  <div class="main">
+    {#if addMode === false}
+      <EventList />
+    {:else}
+      <AddEvent />
+    {/if}
   </div>
 
   <div class="item-addEvent">
-    <button>이벤트 추가</button>
+    <button
+      on:click={() => {
+        addMode = !addMode;
+      }}
+    >
+      {#if addMode === false}
+        이벤트 추가
+      {:else}
+        이벤트 추가 취소
+      {/if}
+    </button>
   </div>
 
   <div class="buttonDiv">
@@ -79,19 +91,9 @@
     color: #333;
   }
 
-  .item-birthDay {
-    grid-row: 2 / 3;
-    align-self: center;
-    color: #333;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: 1fr;
-  }
-
-  .eventList {
+  .main {
     grid-row: 3 / 13;
     overflow-y: scroll;
-    border: 1px solid #eaeaea;
   }
 
   .item-addEvent {

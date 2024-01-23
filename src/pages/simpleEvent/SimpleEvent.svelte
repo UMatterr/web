@@ -3,7 +3,7 @@
   import { currentPage } from "@stores/page.js";
 
   onMount(() => {
-    currentPage.set("간편 메시지 생성");
+    currentPage.set("간편 이벤트 생성");
   });
 </script>
 
