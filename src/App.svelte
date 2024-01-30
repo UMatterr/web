@@ -1,10 +1,14 @@
 <script>
   import Login from "@pages/login/Login.svelte";
   import Header from "@components/Header.svelte";
-  import { isLoggedIn } from "@stores/user.js";
-
   import Router from "svelte-spa-router";
   import { rootRouter } from "./routes/rootRouter.js";
+  import { isLoggedIn } from "@stores/user.js";
+  import { getCookie } from "@utils/cookieUtil.js";
+
+  isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
+
+  console.log($isLoggedIn);
 </script>
 
 {#if $isLoggedIn}

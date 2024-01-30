@@ -2,6 +2,7 @@
   import Footer from "@components/Footer.svelte";
   import EventList from "./event/EventList.svelte";
   import FriendList from "./friend/FriendList.svelte";
+  import Setting from "./setting/Setting.svelte";
 
   let page = "event";
 </script>
@@ -12,6 +13,8 @@
       <EventList />
     {:else if page === "friend"}
       <FriendList />
+    {:else if page === "setting"}
+      <Setting />
     {/if}
   </div>
   <div class="footer">
