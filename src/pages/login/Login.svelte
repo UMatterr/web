@@ -1,5 +1,5 @@
 <script>
-  import { KAKAO_CLIENT_KEY, BACKEND_URL } from "@src/config";
+  import { BACKEND_URL } from "@src/config";
   import umatterLogo from "@assets/umatter.svg";
   import kakaoButton from "@assets/kakao_login_medium_wide.png";
 </script>
@@ -7,8 +7,7 @@
 <div class="container">
   <h1 class="item">UMatter</h1>
   <img class="item2 logo" src={umatterLogo} alt="" />
-  <a href="http://localhost:8000/auth/login"><img src={kakaoButton} alt="" /></a
-  >
+  <a href="{BACKEND_URL}/auth/login"><img src={kakaoButton} alt="" /></a>
 </div>
 
 <style>
