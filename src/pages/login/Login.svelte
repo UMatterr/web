@@ -7,7 +7,9 @@
 <div class="container">
   <h1 class="item">UMatter</h1>
   <img class="item2 logo" src={umatterLogo} alt="" />
-  <a href="{BACKEND_URL}/auth/login"><img src={kakaoButton} alt="" /></a>
+  <a class="item3" href="{BACKEND_URL}/auth/login"
+    ><img src={kakaoButton} alt="" /></a
+  >
 </div>
 
 <style>

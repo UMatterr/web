@@ -2,13 +2,13 @@
   import { onMount } from "svelte";
   import { querystring, pop } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
+  import { createFriend } from "@api/friendApi.js";
   import EventList from "./EventList.svelte";
   import AddEvent from "./AddEvent.svelte";
 
   let addMode = false;
-
+  let friendId = null;
   onMount(() => {
-    let friendId = null;
     if ($querystring) {
       friendId = $querystring.split("=")[1].trim();
       console.log(friendId);
@@ -17,6 +17,26 @@
       currentPage.set("친구 생성");
     }
   });
+
+  async function saveButton() {
+    const name = document.getElementById("name").value;
+    if (!name) {
+      alert("이름을 입력해주세요");
+      return;
+    }
+
+    if (friendId) {
+      // update
+    } else {
+      // create
+      const res = await createFriend(name);
+      if (res) {
+        alert("성공");
+      } else {
+        alert("실패");
+      }
+    }
+  }
 </script>
 
 <div class="grid">
@@ -55,7 +75,7 @@
   </div>
 
   <div class="buttonDiv">
-    <button>저장</button>
+    <button on:click={saveButton}>저장</button>
     <button on:click={() => pop()}>취소</button>
   </div>
 </div>
