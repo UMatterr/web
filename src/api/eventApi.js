@@ -23,3 +23,28 @@ export const getEventTypes = async () => {
     return null;
   }
 };
+
+export const createEvent = async (data) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/event`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return createEvent(data);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};

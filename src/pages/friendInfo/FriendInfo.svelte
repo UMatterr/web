@@ -49,7 +49,7 @@
     {#if addMode === false}
       <InfoMode bind:addMode on:delete={deleteEvent} />
     {:else}
-      <AddMode bind:addMode />
+      <AddMode bind:addMode {friendId} />
     {/if}
   </div>
 </div>
