@@ -2,15 +2,20 @@
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
   import Friend from "./Friend.svelte";
+  import { getFriends } from "@api/friendApi.js";
 
-  onMount(() => {
+  let friends = [];
+
+  onMount(async () => {
     currentPage.set("친구");
+    friends = await getFriends();
   });
 </script>
 
 <div class="container">
-  <Friend />
-  <Friend />
+  {#each friends as friend}
+    <Friend name={friend.name} friendId={friend.friendId} />
+  {/each}
 </div>
 
 <style>

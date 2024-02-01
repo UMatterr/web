@@ -31,7 +31,7 @@
       // create
       const res = await createFriend(name);
       if (res) {
-        alert("성공");
+        console.log(res);
       } else {
         alert("실패");
       }
