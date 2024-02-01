@@ -3,7 +3,9 @@ import FriendInfo from "@pages/friendInfo/FriendInfo.svelte";
 import SimpleEvent from "@pages/simpleEvent/SimpleEvent.svelte";
 
 export const rootRouter = {
-  "/": Home,
+  "/events": Home,
+  "/friends": Home,
+  "/setting": Home,
   "/friend/info": FriendInfo,
   "/simple_event": SimpleEvent,
 };

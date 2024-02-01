@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { currentPage } from "@stores/page.js";
+  import { currentPage, recentHome } from "@stores/page.js";
   import Friend from "./Friend.svelte";
   import { getFriends } from "@api/friendApi.js";
 
@@ -8,6 +8,7 @@
 
   onMount(async () => {
     currentPage.set("친구");
+    recentHome.set("friend");
     friends = await getFriends();
   });
 </script>

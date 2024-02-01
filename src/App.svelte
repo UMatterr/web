@@ -2,13 +2,20 @@
   import Login from "@pages/login/Login.svelte";
   import Header from "@components/Header.svelte";
   import Router from "svelte-spa-router";
+  import { push, location } from "svelte-spa-router";
+  import { onMount } from "svelte";
   import { rootRouter } from "./routes/rootRouter.js";
   import { isLoggedIn } from "@stores/user.js";
   import { getCookie } from "@utils/cookieUtil.js";
 
   isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
 
-  console.log($isLoggedIn);
+  onMount(() => {
+    console.log($location);
+    if ($isLoggedIn && $location === "/") {
+      push("/events");
+    }
+  });
 </script>
 
 {#if $isLoggedIn}

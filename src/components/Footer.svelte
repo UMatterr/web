@@ -1,8 +1,8 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <script>
-  export let page;
-
+  import { push } from "svelte-spa-router";
+  import { recentHome } from "@stores/page.js";
   import homeSvg from "@assets/home.svg";
   import homeFillSvg from "@assets/home-fill.svg";
   import personSvg from "@assets/person.svg";
@@ -11,28 +11,31 @@
   import settingFillSvg from "@assets/setting-fill.svg";
 
   function homeClick() {
-    page = "event";
+    recentHome.set("event");
+    push("/events");
   }
 
   function personClick() {
-    page = "friend";
+    recentHome.set("friend");
+    push("/friends");
   }
 
   function settingClick() {
-    page = "setting";
+    recentHome.set("setting");
+    push("/setting");
   }
 </script>
 
 <div>
-  {#if page === "event"}
+  {#if $recentHome === "event"}
     <img class="item" src={homeFillSvg} alt="" />
     <img on:click={personClick} class="item" src={personSvg} alt="" />
     <img on:click={settingClick} class="item" src={settingSvg} alt="" />
-  {:else if page === "friend"}
+  {:else if $recentHome === "friend"}
     <img on:click={homeClick} class="item" src={homeSvg} alt="" />
     <img class="item" src={personFillSvg} alt="" />
     <img on:click={settingClick} class="item" src={settingSvg} alt="" />
-  {:else if page === "setting"}
+  {:else if $recentHome === "setting"}
     <img on:click={homeClick} class="item" src={homeSvg} alt="" />
     <img on:click={personClick} class="item" src={personSvg} alt="" />
     <img class="item" src={settingFillSvg} alt="" />

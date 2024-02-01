@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from "svelte";
-  import { querystring, pop, replace, location } from "svelte-spa-router";
+  import { onMount, beforeUpdate, afterUpdate } from "svelte";
+  import { querystring, pop, replace, push } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
   import { createFriend, getFriendInfo } from "@api/friendApi.js";
   import EventList from "./EventList.svelte";
@@ -36,8 +36,13 @@
       // create
       const res = await createFriend(name);
       if (res) {
-        window.location.href = `#/friend/info?friendId=${res.friendId}`;
-        window.location.reload();
+        // window.location.href = `#/friend/info?friendId=${res.friendId}`;
+        // window.location.reload();
+        await pop().then(() => {
+          console.log("aaa");
+        });
+        await push(`/friend/info?friendId=${res.friendId}`);
+        console.log("bbb");
       } else {
         alert("실패");
       }

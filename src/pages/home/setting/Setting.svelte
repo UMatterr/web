@@ -1,10 +1,11 @@
 <script>
   import { onMount } from "svelte";
-  import { currentPage } from "@stores/page.js";
+  import { currentPage, recentHome } from "@stores/page.js";
   import { BACKEND_URL } from "@src/config.js";
 
   onMount(() => {
     currentPage.set("설정");
+    recentHome.set("setting");
   });
 </script>
 

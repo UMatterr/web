@@ -3,22 +3,17 @@
   import EventList from "./event/EventList.svelte";
   import FriendList from "./friend/FriendList.svelte";
   import Setting from "./setting/Setting.svelte";
-
-  let page = "event";
+  import { recentHome } from "@stores/page.js";
+  import Router from "svelte-spa-router";
+  import { homeRouter } from "@routes/homeRouter.js";
 </script>
 
 <div class="container">
   <div class="main">
-    {#if page === "event"}
-      <EventList />
-    {:else if page === "friend"}
-      <FriendList />
-    {:else if page === "setting"}
-      <Setting />
-    {/if}
+    <Router routes={homeRouter} />
   </div>
   <div class="footer">
-    <Footer bind:page></Footer>
+    <Footer></Footer>
   </div>
 </div>
 
