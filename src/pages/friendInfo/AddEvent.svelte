@@ -1,7 +1,17 @@
 <script>
   import Select from "svelte-select";
+  import { onMount } from "svelte";
+  import { getEventTypes } from "@api/eventApi.js";
 
-  const items = ["입학", "졸업", "생일", "기타"];
+  let items;
+
+  onMount(async () => {
+    const etypes = await getEventTypes();
+    items = etypes.map((e) => {
+      return { value: e.eventTypeId, label: e.name };
+    });
+    console.log(items);
+  });
 </script>
 
 <div class="grid">
