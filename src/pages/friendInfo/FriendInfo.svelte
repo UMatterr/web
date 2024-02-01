@@ -1,26 +1,19 @@
 <script>
-  import { onMount, beforeUpdate, afterUpdate } from "svelte";
-  import { querystring, pop, replace, push } from "svelte-spa-router";
+  import { onMount } from "svelte";
+  import { querystring } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
-  import { createFriend, getFriendInfo } from "@api/friendApi.js";
+  import { getFriendInfo } from "@api/friendApi.js";
   import EventList from "./EventList.svelte";
   import AddEvent from "./AddEvent.svelte";
 
   let addMode = false;
   let friendId = null;
   let friendName = "";
-  console.log("out");
   onMount(async () => {
-    console.log("in");
-    if ($querystring) {
-      friendId = $querystring.split("=")[1].trim();
-      const friend = await getFriendInfo(friendId);
-      console.log(friend);
-      friendName = friend.friendName;
-      currentPage.set(friendName);
-    } else {
-      currentPage.set("친구 생성");
-    }
+    friendId = $querystring.split("=")[1].trim();
+    const friend = await getFriendInfo(friendId);
+    friendName = friend.friendName;
+    currentPage.set(friendName);
   });
 
   async function saveButton() {
@@ -29,24 +22,7 @@
       alert("이름을 입력해주세요");
       return;
     }
-
-    if (friendId) {
-      // update
-    } else {
-      // create
-      const res = await createFriend(name);
-      if (res) {
-        // window.location.href = `#/friend/info?friendId=${res.friendId}`;
-        // window.location.reload();
-        await pop().then(() => {
-          console.log("aaa");
-        });
-        await push(`/friend/info?friendId=${res.friendId}`);
-        console.log("bbb");
-      } else {
-        alert("실패");
-      }
-    }
+    console.log("update");
   }
 </script>
 
@@ -88,11 +64,7 @@
 
   <div class="buttonDiv">
     <button on:click={saveButton}>저장</button>
-    {#if friendId}
-      <button>친구 삭제</button>
-    {:else}
-      <button on:click={() => pop()}>취소</button>
-    {/if}
+    <button>친구 삭제</button>
   </div>
 </div>
 
