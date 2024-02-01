@@ -3,8 +3,8 @@
   import { pop, querystring } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
   import { getFriendInfo, deleteFriend } from "@api/friendApi.js";
-  import EventList from "./EventList.svelte";
-  import AddEvent from "./AddEvent.svelte";
+  import InfoMode from "./InfoMode.svelte";
+  import AddMode from "./AddMode.svelte";
 
   let addMode = false;
   let friendId = null;
@@ -17,15 +17,13 @@
   });
 
   async function saveButton() {
-    const name = friendName;
-    if (!name) {
-      alert("이름을 입력해주세요");
-      return;
+    if (addMode) {
+      // 이벤트 추가
+      console.log("이벤트 추가");
     }
-    console.log("update");
   }
 
-  async function deleteButton() {
+  async function deleteEvent() {
     const success = await deleteFriend(friendId);
     if (success) {
       pop();
@@ -49,29 +47,10 @@
 
   <div class="main">
     {#if addMode === false}
-      <EventList />
+      <InfoMode bind:addMode on:delete={deleteEvent} />
     {:else}
-      <AddEvent />
+      <AddMode bind:addMode />
     {/if}
-  </div>
-
-  <div class="item-addEvent">
-    <button
-      on:click={() => {
-        addMode = !addMode;
-      }}
-    >
-      {#if addMode === false}
-        이벤트 추가
-      {:else}
-        이벤트 추가 취소
-      {/if}
-    </button>
-  </div>
-
-  <div class="buttonDiv">
-    <button on:click={saveButton}>저장</button>
-    <button on:click={deleteButton}>친구 삭제</button>
   </div>
 </div>
 
@@ -107,38 +86,7 @@
   }
 
   .main {
-    grid-row: 3 / 13;
+    grid-row: 3 / 16;
     overflow-y: scroll;
-  }
-
-  .item-addEvent {
-    grid-row: 13 / 14;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .item-addEvent button {
-    border: 1px solid #eaeaea;
-    border-radius: 5px;
-    padding: 0.5rem;
-    margin: 0.5rem;
-  }
-
-  .buttonDiv {
-    grid-row: 15 / 16;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
-
-  .buttonDiv button {
-    border: 1px solid #eaeaea;
-    border-radius: 5px;
-    padding: 0.5rem;
-    margin: 0.5rem;
   }
 </style>
