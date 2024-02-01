@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { querystring, pop } from "svelte-spa-router";
+  import { querystring, pop, replace, location } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
   import { createFriend, getFriendInfo } from "@api/friendApi.js";
   import EventList from "./EventList.svelte";
@@ -8,20 +8,23 @@
 
   let addMode = false;
   let friendId = null;
+  let friendName = "";
+  console.log("out");
   onMount(async () => {
+    console.log("in");
     if ($querystring) {
       friendId = $querystring.split("=")[1].trim();
       const friend = await getFriendInfo(friendId);
       console.log(friend);
-      currentPage.set(friend.name);
-      document.getElementById("name").value = friend.name;
+      friendName = friend.friendName;
+      currentPage.set(friendName);
     } else {
       currentPage.set("친구 생성");
     }
   });
 
   async function saveButton() {
-    const name = document.getElementById("name").value;
+    const name = friendName;
     if (!name) {
       alert("이름을 입력해주세요");
       return;
@@ -33,7 +36,8 @@
       // create
       const res = await createFriend(name);
       if (res) {
-        console.log(res);
+        window.location.href = `#/friend/info?friendId=${res.friendId}`;
+        window.location.reload();
       } else {
         alert("실패");
       }
@@ -50,6 +54,7 @@
       type="text"
       id="name"
       name="name"
+      bind:value={friendName}
       autocomplete="off"
     />
   </div>
