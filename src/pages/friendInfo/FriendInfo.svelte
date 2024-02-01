@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import { querystring } from "svelte-spa-router";
+  import { pop, querystring } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
-  import { getFriendInfo } from "@api/friendApi.js";
+  import { getFriendInfo, deleteFriend } from "@api/friendApi.js";
   import EventList from "./EventList.svelte";
   import AddEvent from "./AddEvent.svelte";
 
@@ -23,6 +23,13 @@
       return;
     }
     console.log("update");
+  }
+
+  async function deleteButton() {
+    const success = await deleteFriend(friendId);
+    if (success) {
+      pop();
+    }
   }
 </script>
 
@@ -64,7 +71,7 @@
 
   <div class="buttonDiv">
     <button on:click={saveButton}>저장</button>
-    <button>친구 삭제</button>
+    <button on:click={deleteButton}>친구 삭제</button>
   </div>
 </div>
 

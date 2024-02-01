@@ -71,3 +71,27 @@ export const getFriendInfo = async (id) => {
     return null;
   }
 };
+
+export const deleteFriend = async (id) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/friends/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return deleteFriend(id);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
