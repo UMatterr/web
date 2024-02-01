@@ -76,7 +76,11 @@
 
   <div class="buttonDiv">
     <button on:click={saveButton}>저장</button>
-    <button on:click={() => pop()}>취소</button>
+    {#if friendId}
+      <button>친구 삭제</button>
+    {:else}
+      <button on:click={() => pop()}>취소</button>
+    {/if}
   </div>
 </div>
 
