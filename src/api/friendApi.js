@@ -48,3 +48,26 @@ export const getFriends = async () => {
     return null;
   }
 };
+
+export const getFriendInfo = async (id) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/friends/${id}`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return getFriendInfo(id);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};

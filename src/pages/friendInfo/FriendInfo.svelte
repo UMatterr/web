@@ -2,17 +2,19 @@
   import { onMount } from "svelte";
   import { querystring, pop } from "svelte-spa-router";
   import { currentPage } from "@stores/page.js";
-  import { createFriend } from "@api/friendApi.js";
+  import { createFriend, getFriendInfo } from "@api/friendApi.js";
   import EventList from "./EventList.svelte";
   import AddEvent from "./AddEvent.svelte";
 
   let addMode = false;
   let friendId = null;
-  onMount(() => {
+  onMount(async () => {
     if ($querystring) {
       friendId = $querystring.split("=")[1].trim();
-      console.log(friendId);
-      currentPage.set("친구이름이 들어갈 예정");
+      const friend = await getFriendInfo(friendId);
+      console.log(friend);
+      currentPage.set(friend.name);
+      document.getElementById("name").value = friend.name;
     } else {
       currentPage.set("친구 생성");
     }
