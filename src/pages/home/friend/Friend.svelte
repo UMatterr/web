@@ -1,19 +1,18 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <script>
-  export let friendId;
-  export let name;
+  export let friend;
 
   import { push } from "svelte-spa-router";
 
   function link() {
-    push(`/friend/info?friendId=${friendId}`);
+    push(`/friend/info?friendId=${friend.friendId}`);
   }
 </script>
 
 <div on:click={link}>
-  <span class="left">{name}</span>
-  <span class="right">이벤트: 6</span>
+  <span class="left">{friend.name}</span>
+  <span class="right">이벤트: {friend.count}</span>
 </div>
 
 <style>

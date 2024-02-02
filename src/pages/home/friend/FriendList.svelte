@@ -10,12 +10,13 @@
     currentPage.set("친구");
     recentHome.set("friend");
     friends = await getFriends();
+    console.log(friends);
   });
 </script>
 
 <div class="container">
   {#each friends as friend}
-    <Friend name={friend.name} friendId={friend.friendId} />
+    <Friend {friend} />
   {/each}
 </div>
 
