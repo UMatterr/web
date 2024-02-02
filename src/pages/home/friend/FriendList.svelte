@@ -10,7 +10,6 @@
     currentPage.set("친구");
     recentHome.set("friend");
     friends = await getFriends();
-    console.log(friends);
   });
 </script>
 

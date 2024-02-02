@@ -8,9 +8,7 @@
   let events = [];
 
   onMount(async () => {
-    console.log(friendId);
     events = await getEventsByFriend(friendId);
-    console.log(events);
   });
 
   const dispatch = createEventDispatcher();
@@ -21,10 +19,13 @@
 </script>
 
 <div class="grid">
-  <div class="eventList">
-    {#each events as event}
-      <Event {event} />
-    {/each}
+  <div class="main">
+    <h2>등록된 이벤트</h2>
+    <div class="eventList">
+      {#each events as event}
+        <Event {event} />
+      {/each}
+    </div>
   </div>
 
   <div class="addEventButtonDiv">
@@ -47,8 +48,24 @@
     height: 100%;
   }
 
-  .eventList {
+  .main {
     grid-row: 1 / 11;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  h2 {
+    text-align: center;
+    grid-row: 1 / 2;
+  }
+
+  .eventList {
+    overflow-y: scroll;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    grid-row: 2 / 11;
   }
 
   .addEventButtonDiv {
