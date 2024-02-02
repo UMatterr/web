@@ -4,11 +4,15 @@
   import { push } from "svelte-spa-router";
   import Select from "svelte-select";
   import Event from "./Event.svelte";
+  import { getAllEvents } from "@api/eventApi.js";
 
   let items = ["시간순", "이름검색", "카테고리"];
+  let events = [];
 
-  onMount(() => {
+  onMount(async () => {
     currentPage.set("이벤트 목록");
+    events = await getAllEvents();
+    console.log(events);
   });
 
   let selectedFilter = "시간순";
@@ -37,16 +41,16 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">카테</th>
+          <th scope="col">이벤트</th>
           <th scope="col">이름</th>
           <th scope="col">날짜</th>
           <th scope="col">주기</th>
         </tr>
       </thead>
       <tbody>
-        <Event />
-        <Event />
-        <Event />
+        {#each events as event}
+          <Event {event} />
+        {/each}
       </tbody>
     </table>
   </div>

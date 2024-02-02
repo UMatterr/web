@@ -1,6 +1,10 @@
+<script>
+  export let event;
+</script>
+
 <tr>
-  <td>생일</td>
-  <td>홍길동</td>
-  <td>2020-01-01</td>
-  <td>매년</td>
+  <td>{event.eventName}</td>
+  <td>{event.friendName}</td>
+  <td>{event.date}</td>
+  <td>{event.repeat}</td>
 </tr>
