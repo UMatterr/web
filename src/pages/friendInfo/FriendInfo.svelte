@@ -46,9 +46,9 @@
   </div>
 
   <div class="main">
-    {#if addMode === false}
-      <InfoMode bind:addMode on:delete={deleteEvent} />
-    {:else}
+    {#if addMode === false && friendId}
+      <InfoMode bind:addMode {friendId} on:delete={deleteEvent} />
+    {:else if addMode === true}
       <AddMode bind:addMode {friendId} />
     {/if}
   </div>

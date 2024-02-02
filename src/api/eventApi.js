@@ -48,3 +48,26 @@ export const createEvent = async (data) => {
     return null;
   }
 };
+
+export const getEventsByFriend = async (friendId) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/events/${friendId}`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return getEventByFriend(friendId);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};

@@ -1,6 +1,17 @@
 <script>
   export let addMode;
-  import { createEventDispatcher } from "svelte";
+  export let friendId;
+  import { onMount, createEventDispatcher } from "svelte";
+  import { getEventsByFriend } from "@api/eventApi.js";
+  import Event from "./Event.svelte";
+
+  let events = [];
+
+  onMount(async () => {
+    console.log(friendId);
+    events = await getEventsByFriend(friendId);
+    console.log(events);
+  });
 
   const dispatch = createEventDispatcher();
 
@@ -11,7 +22,9 @@
 
 <div class="grid">
   <div class="eventList">
-    <h1>EventList</h1>
+    {#each events as event}
+      <Event {event} />
+    {/each}
   </div>
 
   <div class="addEventButtonDiv">
