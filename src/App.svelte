@@ -10,6 +10,8 @@
 
   isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
 
+  console.log(getCookie("isLoggedIn"));
+
   onMount(() => {
     if ($isLoggedIn && $location === "/") {
       push("/events");
