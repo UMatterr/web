@@ -6,20 +6,16 @@
   import { onMount } from "svelte";
   import { rootRouter } from "./routes/rootRouter.js";
   import { isLoggedIn } from "@stores/user.js";
-  import { getAuth } from "@api/authApi.js";
+  import { getCookie } from "@utils/cookieUtil.js";
 
-  // isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
+  isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
 
-  onMount(async () => {
-    const result = await getAuth();
-    if (result) {
-      isLoggedIn.set(true);
-      console.log("User is logged in");
+  console.log(getCookie("isLoggedIn"));
+
+  onMount(() => {
+    if ($isLoggedIn && $location === "/") {
       push("/events");
     }
-    // if ($isLoggedIn && $location === "/") {
-    //   push("/events");
-    // }
   });
 </script>
 
