@@ -7,7 +7,7 @@
   import { rootRouter } from "./routes/rootRouter.js";
   import { isLoggedIn } from "@stores/user.js";
   import { getAuth } from "@api/authApi.js";
-  import { getCookie } from "@utils/cookie.js";
+  import { getCookie } from "@utils/cookieUtil.js";
 
   // isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
 
