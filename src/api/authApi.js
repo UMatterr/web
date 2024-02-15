@@ -16,19 +16,3 @@ export const refreshAccessToken = async () => {
     return false;
   }
 };
-
-export const getAuth = async () => {
-  try {
-    const res = await fetch(`${BACKEND_URL}/auth`, {
-      credentials: "include",
-    });
-    if (!res.ok) {
-      console.log("로그인 안됨");
-      return false;
-    }
-    return true;
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
-};
