@@ -8,7 +8,7 @@
   import { isLoggedIn } from "@stores/user.js";
   import { getAuth } from "@api/authApi.js";
 
-  isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
+  // isLoggedIn.set(getCookie("isLoggedIn") === "True" ? true : false);
 
   onMount(async () => {
     const result = await getAuth();
