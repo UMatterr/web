@@ -3,15 +3,21 @@
   import { currentPage } from "@stores/page.js";
   import Select from "svelte-select";
   import Event from "./Event.svelte";
-  import { getAllEvents } from "@api/eventApi.js";
+  import { getAllEvents, getEventTypes } from "@api/eventApi.js";
 
   let items = ["시간순", "이름검색", "카테고리"];
   let events = [];
+  let eventTypes = [];
+  let selectedEventType;
 
   onMount(async () => {
     currentPage.set("이벤트 목록");
     events = await getAllEvents();
-    console.log(events);
+    const etypes = await getEventTypes();
+    eventTypes = etypes.map((e) => {
+      return { value: e.eventTypeId, label: e.name };
+    });
+    console.log(eventTypes);
   });
 
   let selectedFilter = "시간순";
@@ -32,7 +38,13 @@
       {#if selectedFilter.label === "이름검색"}
         <input class="form-control" type="text" />
       {:else if selectedFilter.label === "카테고리"}
-        <Select />
+        <Select
+          items={eventTypes}
+          showChevron={true}
+          clearable={false}
+          searchable={false}
+          bind:value={selectedEventType}
+        />
       {/if}
     </div>
   </div>
