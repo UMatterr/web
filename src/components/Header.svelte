@@ -87,6 +87,7 @@
   .header-h1 {
     margin: 0;
     padding: 0.5rem;
+    padding-left: 1rem;
     font-size: 1.5rem;
     font-weight: 500;
     color: #333;
