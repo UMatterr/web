@@ -36,6 +36,8 @@ resource "aws_cloudfront_distribution" "web" {
   comment             = "umatter-web"
   default_root_object = "index.html"
 
+  aliases = [var.domain]
+
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
@@ -49,7 +51,7 @@ resource "aws_cloudfront_distribution" "web" {
       }
     }
 
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
@@ -63,10 +65,24 @@ resource "aws_cloudfront_distribution" "web" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = var.certificate_arn
+    ssl_support_method  = "sni-only"
+
+    minimum_protocol_version = "TLSv1.2_2019"
   }
 }
 
+resource "aws_route53_record" "root_domain" {
+  zone_id = var.zone_id
+  name    = var.domain
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.web.domain_name
+    zone_id                = aws_cloudfront_distribution.web.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
 
 output "cloudfront_distribution_id" {
   value = aws_cloudfront_distribution.web.id
