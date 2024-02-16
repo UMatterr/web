@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
-  import { push } from "svelte-spa-router";
   import Select from "svelte-select";
   import Event from "./Event.svelte";
   import { getAllEvents } from "@api/eventApi.js";
@@ -54,11 +53,6 @@
       </tbody>
     </table>
   </div>
-
-  <div class="buttonDiv">
-    <button>간편 메시지 생성</button>
-    <button on:click={() => push("/simple_event")}>간편 이벤트 등록</button>
-  </div>
 </div>
 
 <style>
@@ -89,20 +83,7 @@
   }
 
   .mainDiv {
-    grid-row: 2/16;
-  }
-
-  .buttonDiv {
-    grid-row: 16/17;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  button {
-    border: 1px solid #eaeaea;
-    border-radius: 5px;
-    padding: 0.5rem;
-    margin: 0.5rem;
+    grid-row: 2/17;
   }
 
   table {
