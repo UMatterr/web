@@ -63,8 +63,8 @@
 
   .eventList {
     overflow-y: scroll;
-    border: 1px solid #eaeaea;
-    border-radius: 5px;
+    /* border: 1px solid #eaeaea;
+    border-radius: 2rem; */
     grid-row: 2 / 11;
   }
 

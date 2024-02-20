@@ -8,7 +8,6 @@
   let eventTypes;
   let selectedEventType = null;
   let selectedRepeat = null;
-  let name = "";
 
   onMount(async () => {
     const etypes = await getEventTypes();
@@ -26,7 +25,7 @@
     const data = {
       eventTypeId: selectedEventType.value,
       friendId,
-      name: name ? name : null,
+      name: null,
       date: document.getElementById("date").value,
       repeat: selectedRepeat.value,
     };
@@ -69,13 +68,6 @@
       bind:value={selectedRepeat}
     />
   </div>
-
-  {#if selectedEventType?.label === "기타"}
-    <div class="item">
-      <label for="etc">기타</label>
-      <input class="form-control" type="text" bind:value={name} />
-    </div>
-  {/if}
 
   <div class="buttonDiv">
     <button on:click={addButton}>추가</button>
