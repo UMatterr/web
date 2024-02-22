@@ -23,15 +23,20 @@
     eventTypes = etypes.map((e) => {
       return { value: e.eventTypeId, label: e.name };
     });
-    console.log(eventTypes);
   });
+
+  async function searchDefault(e) {
+    if (e.detail.index === 0) {
+      events = await getAllEvents();
+      console.log(events);
+    }
+  }
 
   async function searchName(e) {
     if (e.target.value === "") {
       events = await getAllEvents();
     } else {
       events = await getEventsByName(e.target.value);
-      console.log(events);
     }
   }
 
@@ -49,6 +54,7 @@
         clearable={false}
         searchable={false}
         bind:value={selectedFilter}
+        on:change={searchDefault}
       />
     </div>
     <div class="restDiv">
