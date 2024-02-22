@@ -94,3 +94,27 @@ export const getAllEvents = async () => {
     return null;
   }
 };
+
+export const deleteEvent = async (eventId) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/event/${eventId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return deleteEvent(eventId);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
