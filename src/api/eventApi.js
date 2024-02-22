@@ -143,3 +143,26 @@ export const getEventsByName = async (name) => {
     return null;
   }
 };
+
+export const getEventsByType = async (etype) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/events?etype=${etype}`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return getEventsByType(etype);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};

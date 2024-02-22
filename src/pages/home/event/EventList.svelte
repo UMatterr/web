@@ -7,6 +7,7 @@
     getAllEvents,
     getEventTypes,
     getEventsByName,
+    getEventsByType,
   } from "@api/eventApi.js";
 
   let items = ["시간순", "이름검색", "카테고리"];
@@ -33,6 +34,10 @@
       console.log(events);
     }
   }
+
+  async function searchType(e) {
+    events = await getEventsByType(e.detail.value);
+  }
 </script>
 
 <div class="grid">
@@ -56,6 +61,7 @@
           clearable={false}
           searchable={false}
           bind:value={selectedEventType}
+          on:change={searchType}
         />
       {/if}
     </div>
