@@ -118,3 +118,28 @@ export const deleteEvent = async (eventId) => {
     return false;
   }
 };
+
+export const getEventsByName = async (name) => {
+  try {
+    const originUri = `${BACKEND_URL}/events?name=${name}`;
+    const decodedUri = decodeURI(originUri);
+    const res = await fetch(decodedUri, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return getEventsByFriendName(name);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};

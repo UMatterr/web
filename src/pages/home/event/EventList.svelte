@@ -3,12 +3,17 @@
   import { currentPage } from "@stores/page.js";
   import Select from "svelte-select";
   import Event from "./Event.svelte";
-  import { getAllEvents, getEventTypes } from "@api/eventApi.js";
+  import {
+    getAllEvents,
+    getEventTypes,
+    getEventsByName,
+  } from "@api/eventApi.js";
 
   let items = ["시간순", "이름검색", "카테고리"];
   let events = [];
   let eventTypes = [];
   let selectedEventType;
+  let selectedFilter = "시간순";
 
   onMount(async () => {
     currentPage.set("이벤트 목록");
@@ -20,7 +25,14 @@
     console.log(eventTypes);
   });
 
-  let selectedFilter = "시간순";
+  async function searchName(e) {
+    if (e.target.value === "") {
+      events = await getAllEvents();
+    } else {
+      events = await getEventsByName(e.target.value);
+      console.log(events);
+    }
+  }
 </script>
 
 <div class="grid">
@@ -36,7 +48,7 @@
     </div>
     <div class="restDiv">
       {#if selectedFilter.label === "이름검색"}
-        <input class="form-control" type="text" />
+        <input class="form-control" type="text" on:change={searchName} />
       {:else if selectedFilter.label === "카테고리"}
         <Select
           items={eventTypes}
