@@ -1,16 +1,23 @@
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <script>
   export let event;
   import trashSvg from "@assets/trash.svg";
-  import { onMount } from "svelte";
+  import { deleteEvent } from "@api/eventApi.js";
 
-  onMount(() => {
-    console.log(event);
-  });
+  async function deleteEventButton() {
+    const success = await deleteEvent(event.eventId);
+    if (success) {
+      window.location.reload();
+    } else {
+      alert("삭제에 실패했습니다.");
+    }
+  }
 </script>
 
 <div>
   <span>{event.eventName}</span>
-  <img src={trashSvg} alt="" />
+  <img on:click={deleteEventButton} src={trashSvg} alt="" />
 </div>
 
 <style>

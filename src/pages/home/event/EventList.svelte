@@ -3,12 +3,18 @@
   import { currentPage } from "@stores/page.js";
   import Select from "svelte-select";
   import Event from "./Event.svelte";
-  import { getAllEvents, getEventTypes } from "@api/eventApi.js";
+  import {
+    getAllEvents,
+    getEventTypes,
+    getEventsByName,
+    getEventsByType,
+  } from "@api/eventApi.js";
 
   let items = ["시간순", "이름검색", "카테고리"];
   let events = [];
   let eventTypes = [];
   let selectedEventType;
+  let selectedFilter = "시간순";
 
   onMount(async () => {
     currentPage.set("이벤트 목록");
@@ -17,10 +23,26 @@
     eventTypes = etypes.map((e) => {
       return { value: e.eventTypeId, label: e.name };
     });
-    console.log(eventTypes);
   });
 
-  let selectedFilter = "시간순";
+  async function searchDefault(e) {
+    if (e.detail.index === 0) {
+      events = await getAllEvents();
+      console.log(events);
+    }
+  }
+
+  async function searchName(e) {
+    if (e.target.value === "") {
+      events = await getAllEvents();
+    } else {
+      events = await getEventsByName(e.target.value);
+    }
+  }
+
+  async function searchType(e) {
+    events = await getEventsByType(e.detail.value);
+  }
 </script>
 
 <div class="grid">
@@ -32,11 +54,12 @@
         clearable={false}
         searchable={false}
         bind:value={selectedFilter}
+        on:change={searchDefault}
       />
     </div>
     <div class="restDiv">
       {#if selectedFilter.label === "이름검색"}
-        <input class="form-control" type="text" />
+        <input class="form-control" type="text" on:change={searchName} />
       {:else if selectedFilter.label === "카테고리"}
         <Select
           items={eventTypes}
@@ -44,6 +67,7 @@
           clearable={false}
           searchable={false}
           bind:value={selectedEventType}
+          on:change={searchType}
         />
       {/if}
     </div>
