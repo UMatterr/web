@@ -53,3 +53,32 @@ export const convertMessage = async (messages, how) => {
     return null;
   }
 };
+
+export const saveMessage = async (eventType, message) => {
+  try {
+    const data = {
+      eventType,
+      message,
+    };
+    const res = await fetch(`${BACKEND_URL}/message`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      if (res.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return saveMessage(eventType, message);
+        throw new Error("refreshToken 만료");
+      }
+      throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};

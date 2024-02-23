@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
   import { eventStore } from "@stores/event.js";
-  import { getMessages, convertMessage } from "@api/messageApi.js";
+  import { getMessages, convertMessage, saveMessage } from "@api/messageApi.js";
   import Select from "svelte-select";
   import Message from "./Message.svelte";
 
@@ -34,6 +34,7 @@
 
   function copy() {
     navigator.clipboard.writeText(text);
+    saveMessage($eventStore.eventType, text);
   }
 
   async function convertButton(e) {
