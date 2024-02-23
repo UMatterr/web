@@ -2,15 +2,18 @@
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
   import { eventStore } from "@stores/event.js";
+  import { getMessages } from "@api/messageApi.js";
   import Select from "svelte-select";
   import Message from "./Message.svelte";
 
   const options = ["기본", "존댓말", "반말"];
   let selectedOption = "기본";
+  let messages = [];
 
-  onMount(() => {
+  onMount(async () => {
     currentPage.set("메시지 생성");
-    console.log($eventStore);
+    const result = await getMessages($eventStore.eventType);
+    messages = [...result.phrase];
   });
 </script>
 
@@ -29,11 +32,9 @@
     </span>
   </header>
   <main>
-    <Message />
-    <Message />
-    <Message />
-    <Message />
-    <Message />
+    {#each messages as message}
+      <Message {message} />
+    {/each}
   </main>
   <div class="selectDiv">
     <Select

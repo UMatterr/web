@@ -1,1 +1,5 @@
-<div>message</div>
+<script>
+  export let message;
+</script>
+
+<div>{message}</div>
