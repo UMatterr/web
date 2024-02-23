@@ -1,17 +1,58 @@
+<!-- svelte-ignore a11y-autofocus -->
 <script>
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
   import { eventStore } from "@stores/event.js";
+  import { getMessages, convertMessage } from "@api/messageApi.js";
   import Select from "svelte-select";
   import Message from "./Message.svelte";
 
+  let isCreateMode = false;
+
   const options = ["기본", "존댓말", "반말"];
   let selectedOption = "기본";
+  let messages = [];
+  let text = ``;
 
-  onMount(() => {
+  onMount(async () => {
     currentPage.set("메시지 생성");
-    console.log($eventStore);
+    const result = await getMessages($eventStore.eventType);
+    messages = [...result.phrase];
   });
+
+  async function generateMessage() {
+    const result = await getMessages($eventStore.eventType);
+    console.log(result);
+    messages = [...result.phrase];
+    selectedOption = "기본";
+  }
+
+  async function messageClick(e) {
+    text = e.detail.message;
+    isCreateMode = true;
+  }
+
+  function copy() {
+    navigator.clipboard.writeText(text);
+  }
+
+  async function convertButton(e) {
+    let how;
+    if (e.detail.value === "기본") {
+      how = "asis";
+    } else if (e.detail.value === "존댓말") {
+      how = "formal";
+    } else if (e.detail.value === "반말") {
+      how = "informal";
+    }
+    const result = await convertMessage(messages, how);
+    messages = [...result.phrase];
+  }
+
+  function directInput() {
+    text = "";
+    isCreateMode = true;
+  }
 </script>
 
 <div class="grid">
@@ -28,26 +69,34 @@
       {$eventStore.eventName}
     </span>
   </header>
-  <main>
-    <Message />
-    <Message />
-    <Message />
-    <Message />
-    <Message />
-  </main>
-  <div class="selectDiv">
-    <Select
-      items={options}
-      bind:value={selectedOption}
-      searchable={false}
-      clearable={false}
-      showChevron={true}
-    />
-  </div>
-  <footer>
-    <button>다시 생성</button>
-    <button>직접 입력</button>
-  </footer>
+  {#if isCreateMode === false}
+    <main>
+      {#each messages as message}
+        <Message {message} on:messageClick={messageClick} />
+      {/each}
+    </main>
+    <div class="selectDiv">
+      <Select
+        items={options}
+        bind:value={selectedOption}
+        searchable={false}
+        clearable={false}
+        showChevron={true}
+        on:change={convertButton}
+      />
+    </div>
+    <footer>
+      <button on:click={generateMessage}>다시 생성</button>
+      <button on:click={directInput}>직접 입력</button>
+    </footer>
+  {:else}
+    <textarea autofocus bind:value={text}></textarea>
+    <div class="selectDiv"></div>
+    <footer>
+      <button on:click={copy}>클립보드에 복사</button>
+      <button on:click={() => (isCreateMode = false)}>취소</button>
+    </footer>
+  {/if}
 </div>
 
 <style>
@@ -105,5 +154,17 @@
     border-radius: 5px;
     padding: 0.5rem;
     margin: 0.5rem;
+  }
+
+  textarea {
+    grid-row: 2 / 11;
+    border-radius: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+    border: 1px solid pink;
+  }
+
+  textarea:focus {
+    outline: none;
   }
 </style>
