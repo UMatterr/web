@@ -18,7 +18,9 @@
 
   async function generateMessage() {
     const result = await getMessages($eventStore.eventType);
+    console.log(result);
     messages = [...result.phrase];
+    selectedOption = "기본";
   }
 
   async function convertButton(e) {
