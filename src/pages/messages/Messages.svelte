@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { currentPage } from "@stores/page.js";
   import { eventStore } from "@stores/event.js";
-  import { getMessages } from "@api/messageApi.js";
+  import { getMessages, convertMessage } from "@api/messageApi.js";
   import Select from "svelte-select";
   import Message from "./Message.svelte";
 
@@ -15,6 +15,24 @@
     const result = await getMessages($eventStore.eventType);
     messages = [...result.phrase];
   });
+
+  async function generateMessage() {
+    const result = await getMessages($eventStore.eventType);
+    messages = [...result.phrase];
+  }
+
+  async function convertButton(e) {
+    let how;
+    if (e.detail.value === "기본") {
+      how = "asis";
+    } else if (e.detail.value === "존댓말") {
+      how = "formal";
+    } else if (e.detail.value === "반말") {
+      how = "informal";
+    }
+    const result = await convertMessage(messages, how);
+    messages = [...result.phrase];
+  }
 </script>
 
 <div class="grid">
@@ -43,10 +61,11 @@
       searchable={false}
       clearable={false}
       showChevron={true}
+      on:change={convertButton}
     />
   </div>
   <footer>
-    <button>다시 생성</button>
+    <button on:click={generateMessage}>다시 생성</button>
     <button>직접 입력</button>
   </footer>
 </div>
